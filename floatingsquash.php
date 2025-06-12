@@ -179,23 +179,32 @@ function floatingsquash_display_menu() {
     $wa_url = esc_url(get_option('floatingsquash_wa_url', '#'));
     $tele_url = esc_url(get_option('floatingsquash_tele_url', '#'));
     $email_url = esc_url(get_option('floatingsquash_email_url', 'mailto:example@example.com'));
+    
+    // Get current page URL
+    $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    
+    // Check which menu should be active
+    $popular_active = (strpos($current_url, $popular_url) !== false) ? 'active' : '';
+    $series_active = (strpos($current_url, $series_url) !== false) ? 'active' : '';
+    $movie_active = (strpos($current_url, $movie_url) !== false && $movie_url != '#') ? 'active' : '';
+    $search_active = (strpos($current_url, $search_url) !== false) ? 'active' : '';
     ?>
     <div class="floatingsquash-container d-lg-none">
         <!-- Main Floating Menu -->
         <div class="floatingsquash-menu d-flex bg-dark text-white fixed-bottom py-2 shadow-lg">
-            <a href="<?php echo $popular_url; ?>" class="floatingsquash-item flex-fill text-center text-decoration-none text-white">
+            <a href="<?php echo $popular_url; ?>" class="floatingsquash-item flex-fill text-center text-decoration-none text-white <?php echo $popular_active; ?>">
                 <i class="fas fa-star d-block fs-5 mb-1"></i>
                 <span class="small">Terpopuler</span>
             </a>
-            <a href="<?php echo $series_url; ?>" class="floatingsquash-item flex-fill text-center text-decoration-none text-white">
+            <a href="<?php echo $series_url; ?>" class="floatingsquash-item flex-fill text-center text-decoration-none text-white <?php echo $series_active; ?>">
                 <i class="fas fa-heart d-block fs-5 mb-1"></i>
                 <span class="small">Series</span>
             </a>
-            <a href="<?php echo $movie_url; ?>" class="floatingsquash-item flex-fill text-center text-decoration-none text-white">
+            <a href="<?php echo $movie_url; ?>" class="floatingsquash-item flex-fill text-center text-decoration-none text-white <?php echo $movie_active; ?>">
                 <i class="fas fa-film d-block fs-5 mb-1"></i>
                 <span class="small">Film</span>
             </a>
-            <a href="<?php echo $search_url; ?>" class="floatingsquash-item flex-fill text-center text-decoration-none text-white">
+            <a href="<?php echo $search_url; ?>" class="floatingsquash-item flex-fill text-center text-decoration-none text-white <?php echo $search_active; ?>">
                 <i class="fas fa-search d-block fs-5 mb-1"></i>
                 <span class="small">Pencarian</span>
             </a>
@@ -312,10 +321,17 @@ function floatingsquash_display_menu() {
         .floatingsquash-item:hover {
             transform: translateY(-3px);
         }
+        
+        /* Style for active menu item */
+        .floatingsquash-item.active {
+            color: #ffc107 !important;
+        }
+        
+        .floatingsquash-item.active i {
+            color: #ffc107 !important;
+        }
     </style>
-    <?php
+    <?php 
 }
 add_action('wp_footer', 'floatingsquash_display_menu');
-
-// [Rest of the code remains the same]
 ?>
