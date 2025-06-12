@@ -43,6 +43,16 @@ function floatingsquash_register_settings() {
     register_setting('floatingsquash_settings_group', 'floatingsquash_series_url');
     register_setting('floatingsquash_settings_group', 'floatingsquash_movie_url');
     register_setting('floatingsquash_settings_group', 'floatingsquash_search_url');
+
+    register_setting('floatingsquash_settings_group', 'floatingsquash_facebook_url');
+    register_setting('floatingsquash_settings_group', 'floatingsquash_instagram_url');
+    register_setting('floatingsquash_settings_group', 'floatingsquash_x_url');
+    register_setting('floatingsquash_settings_group', 'floatingsquash_tiktok_url');
+    register_setting('floatingsquash_settings_group', 'floatingsquash_fbm_url');
+    register_setting('floatingsquash_settings_group', 'floatingsquash_wa_url');
+    register_setting('floatingsquash_settings_group', 'floatingsquash_tele_url');
+    register_setting('floatingsquash_settings_group', 'floatingsquash_email_url');
+
 }
 add_action('admin_init', 'floatingsquash_register_settings');
 
@@ -81,9 +91,65 @@ function floatingsquash_settings_page() {
                     <th scope="row">URL Menu Pencarian</th>
                     <td>
                         <input type="url" name="floatingsquash_search_url" value="<?php echo esc_url(get_option('floatingsquash_search_url', 'https://ashesofamericanmovie.com/?s=')); ?>" class="regular-text" />
-                        <p class="description">URL untuk halaman pencarian (biarkan "?s=" di akhir untuk fungsi pencarian)</p>
                     </td>
                 </tr>
+
+                 <tr valign="top">
+                    <th scope="row">Facebook</th>
+                    <td>
+                        <input type="url" name="floatingsquash_facebook_url" value="<?php echo esc_url(get_option('floatingsquash_facebook_url', '#')); ?>" class="regular-text" />
+                    </td>
+                 </tr>
+
+                 <tr valign="top">
+                    <th scope="row">Instagram</th>
+                    <td>
+                        <input type="url" name="floatingsquash_instagram_url" value="<?php echo esc_url(get_option('floatingsquash_instagram_url', '#')); ?>" class="regular-text" />
+                    </td>
+                 </tr>
+
+                 <tr valign="top">
+                    <th scope="row">Twitter / X</th>
+                    <td>
+                        <input type="url" name="floatingsquash_x_url" value="<?php echo esc_url(get_option('floatingsquash_x_url', '#')); ?>" class="regular-text" />
+                    </td>
+                 </tr>
+
+                 <tr valign="top">
+                    <th scope="row">Tiktok</th>
+                    <td>
+                        <input type="url" name="floatingsquash_tiktok_url" value="<?php echo esc_url(get_option('floatingsquash_tiktok_url', '#')); ?>" class="regular-text" />
+                    </td>
+                 </tr>
+
+                  <tr valign="top">
+                    <th scope="row">FB Messenger</th>
+                    <td>
+                        <input type="url" name="floatingsquash_fbm_url" value="<?php echo esc_url(get_option('floatingsquash_fbm_url', '#')); ?>" class="regular-text" />
+                    </td>
+                 </tr>
+
+                 <tr valign="top">
+                    <th scope="row">Whatsapp</th>
+                    <td>
+                        <input type="url" name="floatingsquash_wa_url" value="<?php echo esc_url(get_option('floatingsquash_wa_url', '#')); ?>" class="regular-text" />
+                    </td>
+                 </tr>
+
+                 <tr valign="top">
+                    <th scope="row">Telegram</th>
+                    <td>
+                        <input type="url" name="floatingsquash_tele_url" value="<?php echo esc_url(get_option('floatingsquash_tele_url', '#')); ?>" class="regular-text" />
+                    </td>
+                 </tr>
+
+                 <tr valign="top">
+                    <th scope="row">Email</th>
+                    <td>
+                        <input type="url" name="floatingsquash_email_url" value="<?php echo esc_url(get_option('floatingsquash_email_url', '#')); ?>" class="regular-text" />
+                    </td>
+                 </tr>
+
             </table>
             
             <?php submit_button(); ?>
@@ -126,14 +192,29 @@ function floatingsquash_display_menu() {
             <div class="floatingsquash-share-content">
                 <h4>Bagikan ke:</h4>
                 <div class="floatingsquash-share-buttons">
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://ashesofamericanmovie.com" target="_blank" class="floatingsquash-share-btn facebook">
+                    <a href="<?php echo $facebook_url; ?>" target="_blank" class="floatingsquash-share-btn facebook">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="https://www.instagram.com/" target="_blank" class="floatingsquash-share-btn instagram">
+                    <a href="<?php echo $instagram_url; ?>" target="_blank" class="floatingsquash-share-btn instagram">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="https://www.tiktok.com/" target="_blank" class="floatingsquash-share-btn tiktok">
+                    <a href="<?php echo $x_url; ?>" target="_blank" class="floatingsquash-share-btn twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="<?php echo $tiktok_url; ?>" target="_blank" class="floatingsquash-share-btn tiktok">
                         <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="<?php echo $fbm_url; ?>" target="_blank" class="floatingsquash-share-btn fbm">
+                        <i class="fab fa-facebook-messenger"></i>
+                    </a>
+                     <a href="<?php echo $wa_url; ?>" target="_blank" class="floatingsquash-share-btn whatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="<?php echo $tele_url; ?>" target="_blank" class="floatingsquash-share-btn telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="<?php echo $email_url; ?>" target="_blank" class="floatingsquash-share-btn email">
+                        <i class="fa fa-mail"></i>
                     </a>
                 </div>
                 <button class="floatingsquash-close-share">&times;</button>
