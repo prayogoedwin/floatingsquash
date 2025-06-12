@@ -23,27 +23,98 @@ function floatingsquash_enqueue_assets() {
 }
 add_action('wp_enqueue_scripts', 'floatingsquash_enqueue_assets');
 
+
+// Add admin menu
+function floatingsquash_add_admin_menu() {
+    add_menu_page(
+        'FloatingSquash Settings',
+        'FloatingSquash',
+        'manage_options',
+        'floatingsquash-settings',
+        'floatingsquash_settings_page',
+        'dashicons-menu-alt'
+    );
+}
+add_action('admin_menu', 'floatingsquash_add_admin_menu');
+
+// Register settings
+function floatingsquash_register_settings() {
+    register_setting('floatingsquash_settings_group', 'floatingsquash_popular_url');
+    register_setting('floatingsquash_settings_group', 'floatingsquash_series_url');
+    register_setting('floatingsquash_settings_group', 'floatingsquash_movie_url');
+    register_setting('floatingsquash_settings_group', 'floatingsquash_search_url');
+}
+add_action('admin_init', 'floatingsquash_register_settings');
+
+// Settings page content
+function floatingsquash_settings_page() {
+    ?>
+    <div class="wrap">
+        <h1>FloatingSquash Settings</h1>
+        <form method="post" action="options.php">
+            <?php settings_fields('floatingsquash_settings_group'); ?>
+            <?php do_settings_sections('floatingsquash_settings_group'); ?>
+            
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row">URL Menu Terpopuler</th>
+                    <td>
+                        <input type="url" name="floatingsquash_popular_url" value="<?php echo esc_url(get_option('floatingsquash_popular_url', 'https://ashesofamericanmovie.com/genre/movie-populer/')); ?>" class="regular-text" />
+                    </td>
+                </tr>
+                
+                <tr valign="top">
+                    <th scope="row">URL Menu Series</th>
+                    <td>
+                        <input type="url" name="floatingsquash_series_url" value="<?php echo esc_url(get_option('floatingsquash_series_url', 'https://ashesofamericanmovie.com/genre/series-populer/')); ?>" class="regular-text" />
+                    </td>
+                </tr>
+                
+                <tr valign="top">
+                    <th scope="row">URL Menu Film</th>
+                    <td>
+                        <input type="url" name="floatingsquash_movie_url" value="<?php echo esc_url(get_option('floatingsquash_movie_url', '#')); ?>" class="regular-text" />
+                    </td>
+                </tr>
+                
+                <tr valign="top">
+                    <th scope="row">URL Menu Pencarian</th>
+                    <td>
+                        <input type="url" name="floatingsquash_search_url" value="<?php echo esc_url(get_option('floatingsquash_search_url', 'https://ashesofamericanmovie.com/?s=')); ?>" class="regular-text" />
+                        <p class="description">URL untuk halaman pencarian (biarkan "?s=" di akhir untuk fungsi pencarian)</p>
+                    </td>
+                </tr>
+            </table>
+            
+            <?php submit_button(); ?>
+        </form>
+    </div>
+    <?php
+}
+
 // Create the floating menu HTML
 function floatingsquash_display_menu() {
     ?>
     <div class="floatingsquash-container">
         <div class="floatingsquash-menu">
-            <a href="https://ashesofamericanmovie.com/genre/movie-populer/" class="floatingsquash-item">
+
+            <a href="<?php echo $popular_url; ?>" class="floatingsquash-item">
                 <i class="fas fa-star"></i>
                 <span>Terpopuler</span>
             </a>
-            <a href="https://ashesofamericanmovie.com/genre/series-populer/" class="floatingsquash-item">
+            <a href="<?php echo $series_url; ?>" class="floatingsquash-item">
                 <i class="fas fa-heart"></i>
                 <span>Series</span>
             </a>
-            <a href="#" class="floatingsquash-item">
+            <a href="<?php echo $movie_url; ?>" class="floatingsquash-item">
                 <i class="fas fa-film"></i>
                 <span>Film</span>
             </a>
-            <a href="https://ashesofamericanmovie.com/?s=" class="floatingsquash-item">
+            <a href="<?php echo $search_url; ?>" class="floatingsquash-item">
                 <i class="fas fa-filter"></i>
                 <span>Pencarian</span>
             </a>
+           
             <div class="floatingsquash-item floatingsquash-share-trigger">
                 <i class="fas fa-share-alt"></i>
                 <span>Share</span>
