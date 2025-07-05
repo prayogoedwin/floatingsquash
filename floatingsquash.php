@@ -48,15 +48,7 @@ function floatingsquash_register_settings() {
     register_setting('floatingsquash_settings_group', 'floatingsquash_series_url');
     register_setting('floatingsquash_settings_group', 'floatingsquash_movie_url');
     register_setting('floatingsquash_settings_group', 'floatingsquash_search_url');
-
-    register_setting('floatingsquash_settings_group', 'floatingsquash_facebook_url');
-    register_setting('floatingsquash_settings_group', 'floatingsquash_instagram_url');
-    register_setting('floatingsquash_settings_group', 'floatingsquash_x_url');
-    register_setting('floatingsquash_settings_group', 'floatingsquash_tiktok_url');
-    register_setting('floatingsquash_settings_group', 'floatingsquash_fbm_url');
-    register_setting('floatingsquash_settings_group', 'floatingsquash_wa_url');
-    register_setting('floatingsquash_settings_group', 'floatingsquash_tele_url');
-    register_setting('floatingsquash_settings_group', 'floatingsquash_email_url');
+    register_setting('floatingsquash_settings_group', 'floatingsquash_request_url');
 
 }
 add_action('admin_init', 'floatingsquash_register_settings');
@@ -98,62 +90,15 @@ function floatingsquash_settings_page() {
                         <input type="url" name="floatingsquash_search_url" value="<?php echo esc_url(get_option('floatingsquash_search_url', 'https://ashesofamericanmovie.com/?s=')); ?>" class="regular-text" />
                     </td>
                 </tr>
-
-                 <tr valign="top">
-                    <th scope="row">Facebook</th>
+                
+                <tr valign="top">
+                    <th scope="row">URLRequest</th>
                     <td>
-                        <input type="url" name="floatingsquash_facebook_url" value="<?php echo esc_url(get_option('floatingsquash_facebook_url', '#')); ?>" class="regular-text" />
+                        <input type="url" name="floatingsquash_request_url" value="<?php echo esc_url(get_option('floatingsquash_request_url', '#')); ?>" class="regular-text" />
                     </td>
-                 </tr>
+                </tr>
 
-                 <tr valign="top">
-                    <th scope="row">Instagram</th>
-                    <td>
-                        <input type="url" name="floatingsquash_instagram_url" value="<?php echo esc_url(get_option('floatingsquash_instagram_url', '#')); ?>" class="regular-text" />
-                    </td>
-                 </tr>
-
-                 <tr valign="top">
-                    <th scope="row">Twitter / X</th>
-                    <td>
-                        <input type="url" name="floatingsquash_x_url" value="<?php echo esc_url(get_option('floatingsquash_x_url', '#')); ?>" class="regular-text" />
-                    </td>
-                 </tr>
-
-                 <tr valign="top">
-                    <th scope="row">Tiktok</th>
-                    <td>
-                        <input type="url" name="floatingsquash_tiktok_url" value="<?php echo esc_url(get_option('floatingsquash_tiktok_url', '#')); ?>" class="regular-text" />
-                    </td>
-                 </tr>
-
-                  <tr valign="top">
-                    <th scope="row">FB Messenger</th>
-                    <td>
-                        <input type="url" name="floatingsquash_fbm_url" value="<?php echo esc_url(get_option('floatingsquash_fbm_url', '#')); ?>" class="regular-text" />
-                    </td>
-                 </tr>
-
-                 <tr valign="top">
-                    <th scope="row">Whatsapp</th>
-                    <td>
-                        <input type="url" name="floatingsquash_wa_url" value="<?php echo esc_url(get_option('floatingsquash_wa_url', '#')); ?>" class="regular-text" />
-                    </td>
-                 </tr>
-
-                 <tr valign="top">
-                    <th scope="row">Telegram</th>
-                    <td>
-                        <input type="url" name="floatingsquash_tele_url" value="<?php echo esc_url(get_option('floatingsquash_tele_url', '#')); ?>" class="regular-text" />
-                    </td>
-                 </tr>
-
-                 <tr valign="top">
-                    <th scope="row">Email</th>
-                    <td>
-                        <input type="url" name="floatingsquash_email_url" value="<?php echo esc_url(get_option('floatingsquash_email_url', '#')); ?>" class="regular-text" />
-                    </td>
-                 </tr>
+                 
 
             </table>
             
@@ -170,15 +115,7 @@ function floatingsquash_display_menu() {
     $series_url = esc_url(get_option('floatingsquash_series_url', 'https://ashesofamericanmovie.com/genre/series-populer/'));
     $movie_url = esc_url(get_option('floatingsquash_movie_url', '#'));
     $search_url = esc_url(get_option('floatingsquash_search_url', 'https://ashesofamericanmovie.com/?s='));
-    
-    $facebook_url = esc_url(get_option('floatingsquash_facebook_url', '#'));
-    $instagram_url = esc_url(get_option('floatingsquash_instagram_url', '#'));
-    $x_url = esc_url(get_option('floatingsquash_x_url', '#'));
-    $tiktok_url = esc_url(get_option('floatingsquash_tiktok_url', '#'));
-    $fbm_url = esc_url(get_option('floatingsquash_fbm_url', '#'));
-    $wa_url = esc_url(get_option('floatingsquash_wa_url', '#'));
-    $tele_url = esc_url(get_option('floatingsquash_tele_url', '#'));
-    $email_url = esc_url(get_option('floatingsquash_email_url', 'mailto:example@example.com'));
+    $request_url = esc_url(get_option('floatingsquash_request_url', 'https://ashesofamericanmovie.com/request'));
     
     // Get current page URL
     $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -188,6 +125,7 @@ function floatingsquash_display_menu() {
     $series_active = (strpos($current_url, $series_url) !== false) ? 'active' : '';
     $movie_active = (strpos($current_url, $movie_url) !== false && $movie_url != '#') ? 'active' : '';
     $search_active = (strpos($current_url, $search_url) !== false) ? 'active' : '';
+    $request_active = (strpos($current_url, $request_url) !== false) ? 'active' : '';
     ?>
     <div class="floatingsquash-container d-lg-none">
         <!-- Main Floating Menu -->
@@ -208,14 +146,16 @@ function floatingsquash_display_menu() {
                 <i class="fas fa-search d-block fs-5 mb-1"></i>
                 <span class="small">Pencarian</span>
             </a>
-            <a href="#" class="floatingsquash-item flex-fill text-center text-decoration-none text-white floatingsquash-share-trigger" data-bs-toggle="modal" data-bs-target="#floatingsquashShareModal">
-                <i class="fas fa-share-alt d-block fs-5 mb-1"></i>
-                <span class="small">Share</span>
+            
+             <a href="<?php echo $request_url; ?>" class="floatingsquash-item flex-fill text-center text-decoration-none text-white <?php echo $request_active; ?>">
+               <i class="fas fa-hand-paper d-block fs-5 mb-1"></i>
+                <span class="small">Request</span>
             </a>
+            
         </div>
 
         <!-- Share Modal -->
-        <div class="modal fade" id="floatingsquashShareModal" tabindex="-1" aria-hidden="true">
+        <div class="modal fade" id="floatingsquashShareModal" tabindex="-1" aria-hidden="true" hidden>
             <div class="modal-dialog modal-dialog-bottom">
                 <div class="modal-content rounded-top-4">
                     <div class="modal-header border-bottom-0 pb-0">
